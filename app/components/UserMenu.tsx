@@ -1,5 +1,7 @@
 'use client';
 
+import { Session } from 'next-auth';
+import { signOut } from 'next-auth/react';
 import { Fragment, useCallback, useState } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
 
@@ -7,9 +9,16 @@ import Avatar from '@/app/components/Avatar';
 import MenuItem from '@/app/components/MenuItem';
 import useRegisterModel from '@/app/hooks/useRegisterModel';
 
-const UserMenu = () => {
+import useLoginModel from '../hooks/useLoginModel';
+
+type UserMenuProps = {
+  currentUser: Session | null;
+};
+
+const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const registerModel = useRegisterModel();
+  const loginModel = useLoginModel();
 
   const toggleOpen = useCallback(() => {
     setIsOpen((value) => !value);
@@ -37,10 +46,21 @@ const UserMenu = () => {
       {isOpen && (
         <div className='absolute rounded-xl shadow-md w-[40vw] md:w-3/4 bg-white overflow-hidden right-0 top-12 text-sm'>
           <div className='flex flex-col cursor-pointer'>
-            <Fragment>
-              <MenuItem onClick={() => {}} label='Login' />
-              <MenuItem onClick={registerModel.onOpen} label='Sign up' />
-            </Fragment>
+            {currentUser?.user ? (
+              <Fragment>
+                <MenuItem onClick={() => {}} label='My trips' />
+                <MenuItem onClick={() => {}} label='My favorites' />
+                <MenuItem onClick={() => {}} label='My reservations' />
+                <MenuItem onClick={() => {}} label='Airbnb my home' />
+                <hr />
+                <MenuItem onClick={() => signOut()} label='Log out' />
+              </Fragment>
+            ) : (
+              <Fragment>
+                <MenuItem onClick={loginModel.onOpen} label='Login' />
+                <MenuItem onClick={registerModel.onOpen} label='Sign up' />
+              </Fragment>
+            )}
           </div>
         </div>
       )}
