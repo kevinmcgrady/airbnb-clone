@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
-import { AiFillGithub } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
 
 import Button from '@/app/components/Button';
@@ -44,7 +43,7 @@ const LoginModel = () => {
 
       return signIn('credentials', { redirect: false, ...payload });
     },
-    onError: (error) => {
+    onError: () => {
       toast.error('Something went wrong');
     },
     onSuccess: (callback) => {
@@ -93,13 +92,7 @@ const LoginModel = () => {
         outline
         label='Continue with Google'
         icon={FcGoogle}
-        onClick={() => {}}
-      />
-      <Button
-        outline
-        label='Continue with Github'
-        icon={AiFillGithub}
-        onClick={() => {}}
+        onClick={() => signIn('google')}
       />
       <div className='text-neutral-500 text-center mt-4 font-light'>
         <div className='justify-center flex flex-row items-center gap-2'>
