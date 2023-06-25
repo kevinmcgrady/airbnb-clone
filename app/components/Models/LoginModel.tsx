@@ -12,7 +12,6 @@ import Button from '@/app/components/Button';
 import Heading from '@/app/components/Heading';
 import Input from '@/app/components/Inputs/Input';
 import useLoginModel from '@/app/hooks/useLoginModel';
-import useRegisterModel from '@/app/hooks/useRegisterModel';
 import {
   LoginUserRequest,
   LoginUserValidator,
@@ -21,7 +20,6 @@ import {
 import Model from './Model';
 
 const LoginModel = () => {
-  const registerModel = useRegisterModel();
   const loginModel = useLoginModel();
   const router = useRouter();
 

@@ -2,6 +2,7 @@
 
 import { Session } from 'next-auth';
 
+import Categories from '@/app/components/Categories';
 import Container from '@/app/components/Container';
 import Logo from '@/app/components/Logo';
 import Search from '@/app/components/Search';
@@ -23,6 +24,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
           </div>
         </Container>
       </div>
+      <Categories />
     </div>
   );
 };
