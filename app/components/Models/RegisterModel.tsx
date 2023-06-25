@@ -1,8 +1,9 @@
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
-import { useCallback, useState } from 'react';
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { AiFillGithub } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
@@ -11,18 +12,22 @@ import Button from '@/app/components/Button';
 import Heading from '@/app/components/Heading';
 import Input from '@/app/components/Inputs/Input';
 import useRegisterModel from '@/app/hooks/useRegisterModel';
+import {
+  RegisterUserRequest,
+  RegisterUserValidator,
+} from '@/app/validators/registerUser';
 
 import Model from './Model';
 
 const RegisterModel = () => {
   const registerModel = useRegisterModel();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FieldValues>({
+  } = useForm<RegisterUserRequest>({
+    resolver: zodResolver(RegisterUserValidator),
     defaultValues: {
       name: '',
       email: '',
@@ -30,17 +35,19 @@ const RegisterModel = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    setIsLoading(true);
-    try {
-      await axios.post('/api/register', data);
-      registerModel.onClose();
-    } catch (error) {
+  const { mutate: registerUser, isLoading } = useMutation({
+    mutationFn: async ({ email, name, password }: RegisterUserRequest) => {
+      const payload: RegisterUserRequest = { email, name, password };
+      const data = await axios.post('/api/reqister', payload);
+      return data;
+    },
+    onError: () => {
       toast.error('Something went wrong');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    },
+    onSuccess: () => {
+      registerModel.onClose();
+    },
+  });
 
   const bodyContent = (
     <div className='flex flex-col gap-4'>
@@ -108,7 +115,7 @@ const RegisterModel = () => {
       title='Register'
       actionLabel='Continue'
       onClose={registerModel.onClose}
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit((e) => registerUser(e))}
       body={bodyContent}
       footer={footerContent}
     />

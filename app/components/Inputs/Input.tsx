@@ -1,6 +1,6 @@
 'use client';
 
-import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
+import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import { BiPound } from 'react-icons/bi';
 
 type InputProps = {
@@ -10,7 +10,7 @@ type InputProps = {
   disabled?: boolean;
   formatPrice?: boolean;
   required?: boolean;
-  register: UseFormRegister<FieldValues>;
+  register: UseFormRegister<any>;
   errors: FieldErrors;
 };
 
@@ -81,6 +81,11 @@ const Input: React.FC<InputProps> = ({
       >
         {label}
       </label>
+      {errors[id]?.message && (
+        <p className='text-sm text-rose-500 mt-4'>
+          {errors[id]?.message?.toString()}
+        </p>
+      )}
     </div>
   );
 };

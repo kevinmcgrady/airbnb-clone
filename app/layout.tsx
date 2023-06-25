@@ -5,6 +5,7 @@ import { Nunito } from 'next/font/google';
 import Navbar from '@/app/components/Navbar';
 
 import RegisterModel from './components/Models/RegisterModel';
+import { ReactQueryProvider } from './providers/ReactQuery';
 import ToasterProvider from './providers/ToasterProvider';
 
 export const metadata = {
@@ -22,10 +23,12 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={font.className}>
-        <ToasterProvider />
-        <RegisterModel />
-        <Navbar />
-        {children}
+        <ReactQueryProvider>
+          <ToasterProvider />
+          <RegisterModel />
+          <Navbar />
+          {children}
+        </ReactQueryProvider>
       </body>
     </html>
   );
