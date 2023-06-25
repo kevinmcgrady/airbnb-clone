@@ -1,11 +1,10 @@
 'use client';
 
+import { Fragment, useCallback, useState } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
 
 import Avatar from '@/app/components/Avatar';
 import MenuItem from '@/app/components/MenuItem';
-
-import { Fragment, useCallback, useState } from 'react';
 
 const UserMenu = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);

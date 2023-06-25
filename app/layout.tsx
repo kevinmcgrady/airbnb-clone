@@ -1,7 +1,8 @@
-import Navbar from '@/app/components/Navbar';
+import './globals.css';
+
 import { Nunito } from 'next/font/google';
 
-import './globals.css';
+import Navbar from '@/app/components/Navbar';
 
 export const metadata = {
   title: 'Airbnb',
