@@ -38,11 +38,11 @@ const RegisterModel = () => {
   const { mutate: registerUser, isLoading } = useMutation({
     mutationFn: async ({ email, name, password }: RegisterUserRequest) => {
       const payload: RegisterUserRequest = { email, name, password };
-      const data = await axios.post('/api/reqister', payload);
+      const data = await axios.post('/api/register', payload);
       return data;
     },
-    onError: () => {
-      toast.error('Something went wrong');
+    onError: (error) => {
+      console.log('Something went wrong');
     },
     onSuccess: () => {
       registerModel.onClose();
