@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
+import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { FcGoogle } from 'react-icons/fc';
@@ -12,6 +13,7 @@ import Button from '@/app/components/Button';
 import Heading from '@/app/components/Heading';
 import Input from '@/app/components/Inputs/Input';
 import useLoginModel from '@/app/hooks/useLoginModel';
+import useRegisterModel from '@/app/hooks/useRegisterModel';
 import {
   LoginUserRequest,
   LoginUserValidator,
@@ -21,6 +23,7 @@ import Model from './Model';
 
 const LoginModel = () => {
   const loginModel = useLoginModel();
+  const registerModel = useRegisterModel();
   const router = useRouter();
 
   const {
@@ -34,6 +37,11 @@ const LoginModel = () => {
       password: '',
     },
   });
+
+  const toggle = useCallback(() => {
+    loginModel.onClose();
+    registerModel.onOpen();
+  }, [loginModel, registerModel]);
 
   const { mutate: loginUser, isLoading } = useMutation({
     mutationFn: async ({ email, password }: LoginUserRequest) => {
@@ -61,7 +69,7 @@ const LoginModel = () => {
 
   const bodyContent = (
     <div className='flex flex-col gap-4'>
-      <Heading title='Welcome back' subtitle='Log in to your account' />
+      <Heading title='Welcome Back' subtitle='Log in to your account' />
       <Input
         id='email'
         errors={errors}
@@ -94,9 +102,13 @@ const LoginModel = () => {
       />
       <div className='text-neutral-500 text-center mt-4 font-light'>
         <div className='justify-center flex flex-row items-center gap-2'>
-          <p>Already have an account?</p>
-          <p className='text-neutral-800 cursor-pointer hover:underline'>
-            Login
+          <p>First time using Airbnb?</p>
+          <p
+            role='link'
+            onClick={toggle}
+            className='text-neutral-800 cursor-pointer hover:underline'
+          >
+            Create an account
           </p>
         </div>
       </div>
@@ -113,6 +125,7 @@ const LoginModel = () => {
       onSubmit={handleSubmit((e) => loginUser(e))}
       body={bodyContent}
       footer={footerContent}
+      isLoading={isLoading}
     />
   );
 };

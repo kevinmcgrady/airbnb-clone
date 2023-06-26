@@ -1,5 +1,6 @@
 'use client';
 
+import { Loader2 } from 'lucide-react';
 import { IconType } from 'react-icons';
 
 type ButtonProps = {
@@ -9,6 +10,7 @@ type ButtonProps = {
   outline?: boolean;
   small?: boolean;
   icon?: IconType;
+  isLoading?: boolean;
 };
 
 const Button: React.FC<ButtonProps> = ({
@@ -18,6 +20,7 @@ const Button: React.FC<ButtonProps> = ({
   outline,
   small,
   icon: Icon,
+  isLoading,
 }) => {
   return (
     <button
@@ -25,6 +28,9 @@ const Button: React.FC<ButtonProps> = ({
       onClick={onClick}
       className={`
         relative
+        flex
+        items-center
+        justify-center
         disabled:opacity-70
         disabled:cursor-not-allowed
         rounded-lg
@@ -50,7 +56,7 @@ const Button: React.FC<ButtonProps> = ({
           '
         />
       )}
-      {label}
+      {isLoading ? <Loader2 className='animate-spin' /> : label}
     </button>
   );
 };

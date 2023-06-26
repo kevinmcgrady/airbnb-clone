@@ -3,14 +3,15 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
+import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
-import { AiFillGithub } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
 
 import Button from '@/app/components/Button';
 import Heading from '@/app/components/Heading';
 import Input from '@/app/components/Inputs/Input';
+import useLoginModel from '@/app/hooks/useLoginModel';
 import useRegisterModel from '@/app/hooks/useRegisterModel';
 import {
   RegisterUserRequest,
@@ -21,6 +22,7 @@ import Model from './Model';
 
 const RegisterModel = () => {
   const registerModel = useRegisterModel();
+  const loginModel = useLoginModel();
 
   const {
     register,
@@ -34,6 +36,11 @@ const RegisterModel = () => {
       password: '',
     },
   });
+
+  const toggle = useCallback(() => {
+    registerModel.onClose();
+    loginModel.onOpen();
+  }, [loginModel, registerModel]);
 
   const { mutate: registerUser, isLoading } = useMutation({
     mutationFn: async ({ email, name, password }: RegisterUserRequest) => {
@@ -94,7 +101,11 @@ const RegisterModel = () => {
       <div className='text-neutral-500 text-center mt-4 font-light'>
         <div className='justify-center flex flex-row items-center gap-2'>
           <p>Already have an account?</p>
-          <p className='text-neutral-800 cursor-pointer hover:underline'>
+          <p
+            role='link'
+            onClick={toggle}
+            className='text-neutral-800 cursor-pointer hover:underline'
+          >
             Login
           </p>
         </div>
@@ -112,6 +123,7 @@ const RegisterModel = () => {
       onSubmit={handleSubmit((e) => registerUser(e))}
       body={bodyContent}
       footer={footerContent}
+      isLoading={isLoading}
     />
   );
 };

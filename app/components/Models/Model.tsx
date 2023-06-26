@@ -16,6 +16,7 @@ type ModalProps = {
   disabled?: boolean;
   secondaryAction?: () => void;
   secondaryActionLabel?: string;
+  isLoading?: boolean;
 };
 
 const Modal: React.FC<ModalProps> = ({
@@ -29,6 +30,7 @@ const Modal: React.FC<ModalProps> = ({
   disabled,
   secondaryAction,
   secondaryActionLabel,
+  isLoading,
 }) => {
   const [showModal, setShowModal] = useState(isOpen);
 
@@ -170,12 +172,14 @@ const Modal: React.FC<ModalProps> = ({
                       label={secondaryActionLabel}
                       onClick={handleSecondaryAction}
                       outline
+                      isLoading={isLoading}
                     />
                   )}
                   <Button
                     disabled={disabled}
                     label={actionLabel}
                     onClick={handleSubmit}
+                    isLoading={isLoading}
                   />
                 </div>
                 {footer}
