@@ -7,6 +7,7 @@ import Navbar from '@/app/components/Navbar';
 
 import LoginModel from './components/Models/LoginModel';
 import RegisterModel from './components/Models/RegisterModel';
+import RentModel from './components/Models/RentModel';
 import { ReactQueryProvider } from './providers/ReactQuery';
 import ToasterProvider from './providers/ToasterProvider';
 
@@ -31,6 +32,7 @@ export default async function RootLayout({
           <ToasterProvider />
           <RegisterModel />
           <LoginModel />
+          <RentModel />
           <Navbar currentUser={currentUser} />
           {children}
         </ReactQueryProvider>
