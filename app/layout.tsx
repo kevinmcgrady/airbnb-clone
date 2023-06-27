@@ -8,6 +8,7 @@ import Navbar from '@/app/components/Navbar';
 import LoginModel from './components/Models/LoginModel';
 import RegisterModel from './components/Models/RegisterModel';
 import RentModel from './components/Models/RentModel';
+import SearchModel from './components/Models/SearchModel';
 import { ReactQueryProvider } from './providers/ReactQuery';
 import ToasterProvider from './providers/ToasterProvider';
 
@@ -33,6 +34,7 @@ export default async function RootLayout({
           <RegisterModel />
           <LoginModel />
           <RentModel />
+          <SearchModel />
           <Navbar currentUser={currentUser} />
           <div className='pb-20 pt-28'>{children}</div>
         </ReactQueryProvider>
