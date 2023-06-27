@@ -1,10 +1,9 @@
 'use client';
 
-import { Listing, Reservation } from '@prisma/client';
+import { Listing, Reservation, User } from '@prisma/client';
 import { format } from 'date-fns';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { User } from 'next-auth';
 import { useCallback, useMemo } from 'react';
 
 import Button from '@/src/components/Button';
@@ -19,7 +18,6 @@ type ListingCardProps = {
   disabled?: boolean;
   actionLabel?: string;
   actionId?: string;
-  favoritedIds: string[];
 };
 
 const ListingCard: React.FC<ListingCardProps> = ({
@@ -30,13 +28,11 @@ const ListingCard: React.FC<ListingCardProps> = ({
   disabled,
   onAction,
   reservation,
-  favoritedIds,
 }) => {
   const router = useRouter();
   const { getByValue } = useCountries();
 
   const location = getByValue(listing.locationValue);
-  const hasFavorited = favoritedIds.includes(listing.id);
 
   const handleCancel = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -82,12 +78,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
             className='object-cover h-full w-full group hover:scale-110 transition'
           />
           <div className='absolute top-3 right-3'>
-            <HeartButton
-              listingId={listing.id}
-              currentUser={currentUser}
-              hasFavorited={hasFavorited}
-              isLoggedIn={!!currentUser}
-            />
+            <HeartButton listingId={listing.id} currentUser={currentUser} />
           </div>
         </div>
         <h2 className='font-semibold text-lg'>

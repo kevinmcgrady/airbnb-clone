@@ -1,10 +1,9 @@
 'use client';
 
-import { Listing } from '@prisma/client';
+import { Listing, User } from '@prisma/client';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { User } from 'next-auth';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 
@@ -15,14 +14,9 @@ import ListingCard from '@/src/components/Listings/ListingCard';
 type PropertiesProps = {
   listings: Listing[];
   currentUser?: User | null;
-  favoriteIds: string[];
 };
 
-const Properties: React.FC<PropertiesProps> = ({
-  listings,
-  currentUser,
-  favoriteIds,
-}) => {
+const Properties: React.FC<PropertiesProps> = ({ listings, currentUser }) => {
   const router = useRouter();
   const [deletingId, setDeletingId] = useState<string>('');
 
@@ -56,7 +50,6 @@ const Properties: React.FC<PropertiesProps> = ({
             disabled={deletingId === property.id}
             actionLabel='Delete property'
             currentUser={currentUser}
-            favoritedIds={favoriteIds}
           />
         ))}
       </div>

@@ -1,9 +1,9 @@
 'use client';
 
+import { User } from '@prisma/client';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { User } from 'next-auth';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 
@@ -15,13 +15,11 @@ import { ReservationWithListing } from '@/src/types/ReservarionWithListing';
 type ReservationsProps = {
   reservations: ReservationWithListing[];
   currentUser?: User | null;
-  favoriteIds: string[];
 };
 
 const Reservations: React.FC<ReservationsProps> = ({
   reservations,
   currentUser,
-  favoriteIds,
 }) => {
   const router = useRouter();
   const [deletingId, setDeletingId] = useState<string>();
@@ -57,7 +55,6 @@ const Reservations: React.FC<ReservationsProps> = ({
             actionLabel='Cancel guest reservation'
             currentUser={currentUser}
             reservation={reservation}
-            favoritedIds={favoriteIds}
           />
         ))}
       </div>

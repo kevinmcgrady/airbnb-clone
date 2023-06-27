@@ -1,18 +1,17 @@
-import { getAuthSession } from '@/src/actions/getCurrentUser';
+import getCurrentUser from '@/src/actions/getCurrentUser';
 import getFavoritedIds from '@/src/actions/getFavoritedIds';
 import getReservations from '@/src/actions/getReservations';
 import EmptyState from '@/src/components/EmptyState';
 import Trips from '@/src/components/Templates/Trips';
 
 const TripsPage = async () => {
-  const currentUser = await getAuthSession();
+  const currentUser = await getCurrentUser();
 
-  if (!currentUser?.user) {
+  if (!currentUser) {
     return <EmptyState title='Not Authorized' subtitle='Please log in.' />;
   }
 
-  const reservations = await getReservations({ userId: currentUser.user.id });
-  const favoriteIds = await getFavoritedIds();
+  const reservations = await getReservations({ userId: currentUser.id });
 
   if (reservations.length === 0) {
     return (
@@ -23,13 +22,7 @@ const TripsPage = async () => {
     );
   }
 
-  return (
-    <Trips
-      reservations={reservations}
-      currentUser={currentUser.user}
-      favoriteIds={favoriteIds}
-    />
-  );
+  return <Trips reservations={reservations} currentUser={currentUser} />;
 };
 
 export default TripsPage;

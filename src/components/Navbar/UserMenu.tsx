@@ -1,7 +1,7 @@
 'use client';
 
+import { User } from '@prisma/client';
 import { useRouter } from 'next/navigation';
-import { Session } from 'next-auth';
 import { signOut } from 'next-auth/react';
 import { Fragment, useCallback, useState } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
@@ -13,7 +13,7 @@ import useRegisterModel from '@/src/hooks/useRegisterModel';
 import useRentModel from '@/src/hooks/useRentModel';
 
 type UserMenuProps = {
-  currentUser: Session | null;
+  currentUser: User | null;
 };
 
 const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
@@ -49,14 +49,14 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
         >
           <AiOutlineMenu />
           <div className='hidden md:block'>
-            <Avatar src={currentUser?.user?.image} />
+            <Avatar src={currentUser?.image} />
           </div>
         </div>
       </div>
       {isOpen && (
         <div className='absolute rounded-xl shadow-md w-[40vw] md:w-3/4 bg-white overflow-hidden right-0 top-12 text-sm'>
           <div className='flex flex-col cursor-pointer'>
-            {currentUser?.user ? (
+            {currentUser ? (
               <Fragment>
                 <MenuItem
                   onClick={() => router.push('/trips')}

@@ -1,7 +1,6 @@
 'use client';
 
-import { Listing } from '@prisma/client';
-import { User } from 'next-auth';
+import { Listing, User } from '@prisma/client';
 
 import Container from '@/src/components/Container';
 import Heading from '@/src/components/Heading';
@@ -10,14 +9,9 @@ import ListingCard from '@/src/components/Listings/ListingCard';
 type FavoritesProps = {
   listings: Listing[];
   currentUser?: User | null;
-  favoriteIds: string[];
 };
 
-const Favorites: React.FC<FavoritesProps> = ({
-  listings,
-  currentUser,
-  favoriteIds,
-}) => {
+const Favorites: React.FC<FavoritesProps> = ({ listings, currentUser }) => {
   return (
     <Container>
       <Heading
@@ -30,7 +24,6 @@ const Favorites: React.FC<FavoritesProps> = ({
             listing={listing}
             currentUser={currentUser}
             key={listing.id}
-            favoritedIds={favoriteIds}
           />
         ))}
       </div>

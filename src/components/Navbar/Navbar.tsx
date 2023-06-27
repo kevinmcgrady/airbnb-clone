@@ -1,6 +1,6 @@
 'use client';
 
-import { Session } from 'next-auth';
+import { User } from '@prisma/client';
 
 import Container from '@/src/components/Container';
 import Categories from '@/src/components/Navbar/Categories';
@@ -9,7 +9,7 @@ import Search from '@/src/components/Navbar/Search';
 import UserMenu from '@/src/components/Navbar/UserMenu';
 
 type NavbarProps = {
-  currentUser: Session | null;
+  currentUser: User | null;
 };
 
 const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {

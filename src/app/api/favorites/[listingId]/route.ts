@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { getAuthSession } from '@/src/actions/getCurrentUser';
+import getCurrentUser from '@/src/actions/getCurrentUser';
 import prisma from '@/src/libs/prismadb';
 
 type Params = {
@@ -9,9 +9,9 @@ type Params = {
 
 export async function POST(req: Request, { params }: { params: Params }) {
   try {
-    const currentUser = await getAuthSession();
+    const currentUser = await getCurrentUser();
 
-    if (!currentUser?.user) {
+    if (!currentUser) {
       return new Response('Not Authorized', { status: 401 });
     }
 
@@ -19,7 +19,7 @@ export async function POST(req: Request, { params }: { params: Params }) {
 
     const databaseUser = await prisma.user.findUnique({
       where: {
-        id: currentUser.user.id,
+        id: currentUser.id,
       },
     });
 
@@ -33,7 +33,7 @@ export async function POST(req: Request, { params }: { params: Params }) {
 
     const user = await prisma.user.update({
       where: {
-        id: currentUser.user.id,
+        id: currentUser.id,
       },
       data: {
         favoriteIds,

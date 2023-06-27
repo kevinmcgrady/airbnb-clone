@@ -5,7 +5,6 @@ import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { differenceInCalendarDays, eachDayOfInterval } from 'date-fns';
 import { useRouter } from 'next/navigation';
-import { User as AuthUser } from 'next-auth';
 import { useEffect, useMemo, useState } from 'react';
 import { Range } from 'react-date-range';
 import { toast } from 'react-hot-toast';
@@ -28,7 +27,7 @@ type ListingProps = {
   listing: Listing & {
     user: User;
   };
-  currentUser?: AuthUser | null;
+  currentUser?: User | null;
   reservations?: Reservation[];
   hasFavorited?: boolean;
 };

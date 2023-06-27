@@ -1,17 +1,17 @@
-import { getAuthSession } from '@/src/actions/getCurrentUser';
+import getCurrentUser from '@/src/actions/getCurrentUser';
 import prisma from '@/src/libs/prismadb';
 
 export default async function getFavoritedIds() {
-  const currentUser = await getAuthSession();
+  const currentUser = await getCurrentUser();
 
   try {
-    if (!currentUser?.user) {
+    if (!currentUser) {
       return [];
     }
 
     const dbUser = await prisma.user.findUnique({
       where: {
-        id: currentUser?.user.id,
+        id: currentUser?.id,
       },
     });
 

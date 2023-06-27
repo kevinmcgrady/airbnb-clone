@@ -16,5 +16,7 @@ export default async function getListingbyId(listingId: string) {
     }
 
     return listing;
-  } catch (error: any) {}
+  } catch (error: any) {
+    throw new Error(error);
+  }
 }

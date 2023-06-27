@@ -1,9 +1,9 @@
 'use client';
 
+import { User } from '@prisma/client';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { User } from 'next-auth';
 import { toast } from 'react-hot-toast';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 
@@ -12,17 +12,15 @@ import useLoginModel from '@/src/hooks/useLoginModel';
 type HeartButtonProps = {
   listingId: string;
   currentUser?: User | null;
-  hasFavorited?: boolean;
-  isLoggedIn?: boolean;
 };
 
 const HeartButton: React.FC<HeartButtonProps> = ({
   listingId,
-  hasFavorited,
-  isLoggedIn,
+  currentUser,
 }) => {
   const router = useRouter();
   const loginModel = useLoginModel();
+  const hasFavorited = currentUser?.favoriteIds.includes(listingId);
 
   const { mutate: toggleFavorite } = useMutation({
     mutationFn: async () => {
@@ -39,7 +37,7 @@ const HeartButton: React.FC<HeartButtonProps> = ({
 
   return (
     <div
-      onClick={isLoggedIn ? () => toggleFavorite() : loginModel.onOpen}
+      onClick={currentUser ? () => toggleFavorite() : loginModel.onOpen}
       className='relative hover:opacity-80 transition cursor-pointer'
     >
       <AiOutlineHeart

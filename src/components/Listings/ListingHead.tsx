@@ -1,7 +1,7 @@
 'use client';
 
+import { User } from '@prisma/client';
 import Image from 'next/image';
-import { User } from 'next-auth';
 import { Fragment } from 'react';
 
 import useCountries from '../../hooks/useCountries';
@@ -23,7 +23,6 @@ const ListingHead: React.FC<ListingHeadProps> = ({
   locationValue,
   title,
   currentUser,
-  hasFavorited,
 }) => {
   const { getByValue } = useCountries();
   const location = getByValue(locationValue);
@@ -42,12 +41,7 @@ const ListingHead: React.FC<ListingHeadProps> = ({
           className='object-cover w-full'
         />
         <div className='absolute top-5 right-5'>
-          <HeartButton
-            listingId={id}
-            currentUser={currentUser}
-            hasFavorited={hasFavorited}
-            isLoggedIn={!!currentUser}
-          />
+          <HeartButton listingId={id} currentUser={currentUser} />
         </div>
       </div>
     </Fragment>

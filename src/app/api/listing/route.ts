@@ -1,14 +1,14 @@
 import { z } from 'zod';
 
-import { getAuthSession } from '@/src/actions/getCurrentUser';
+import getCurrentUser from '@/src/actions/getCurrentUser';
 import prisma from '@/src/libs/prismadb';
 import { CreateListingValidator } from '@/src/validators/CreateListing';
 
 export async function POST(req: Request) {
   try {
-    const currentUser = await getAuthSession();
+    const currentUser = await getCurrentUser();
 
-    if (!currentUser?.user) {
+    if (!currentUser) {
       return new Response('Not Authorized', { status: 401 });
     }
 
@@ -36,7 +36,7 @@ export async function POST(req: Request) {
         category,
         bathroomCount,
         imageSrc,
-        userId: currentUser.user.id,
+        userId: currentUser.id,
       },
     });
 

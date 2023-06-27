@@ -1,18 +1,16 @@
-import { getAuthSession } from '@/src/actions/getCurrentUser';
-import getFavoritedIds from '@/src/actions/getFavoritedIds';
+import getCurrentUser from '@/src/actions/getCurrentUser';
 import getListings from '@/src/actions/getListings';
 import EmptyState from '@/src/components/EmptyState';
 import Properties from '@/src/components/Templates/Properties';
 
 const PropertiesPage = async () => {
-  const currentUser = await getAuthSession();
+  const currentUser = await getCurrentUser();
 
-  if (!currentUser?.user) {
+  if (!currentUser) {
     return <EmptyState title='Not Authorized' subtitle='Please log in.' />;
   }
 
-  const listings = await getListings({ userId: currentUser.user.id });
-  const favoriteIds = await getFavoritedIds();
+  const listings = await getListings({ userId: currentUser.id });
 
   if (listings.length === 0) {
     return (
@@ -23,13 +21,7 @@ const PropertiesPage = async () => {
     );
   }
 
-  return (
-    <Properties
-      listings={listings}
-      currentUser={currentUser.user}
-      favoriteIds={favoriteIds}
-    />
-  );
+  return <Properties listings={listings} currentUser={currentUser} />;
 };
 
 export default PropertiesPage;

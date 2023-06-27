@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { getAuthSession } from '@/src/actions/getCurrentUser';
+import getCurrentUser from '@/src/actions/getCurrentUser';
 import prisma from '@/src/libs/prismadb';
 
 type Params = {
@@ -9,9 +9,9 @@ type Params = {
 
 export async function DELETE(req: Request, { params }: { params: Params }) {
   try {
-    const currentUser = await getAuthSession();
+    const currentUser = await getCurrentUser();
 
-    if (!currentUser?.user) {
+    if (!currentUser) {
       return new Response('Not Authorized', { status: 401 });
     }
 
@@ -21,8 +21,8 @@ export async function DELETE(req: Request, { params }: { params: Params }) {
       where: {
         id: reservationId,
         OR: [
-          { userId: currentUser.user.id },
-          { listing: { userId: currentUser.user.id } },
+          { userId: currentUser.id },
+          { listing: { userId: currentUser.id } },
         ],
       },
     });

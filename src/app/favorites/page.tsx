@@ -1,4 +1,4 @@
-import { getAuthSession } from '@/src/actions/getCurrentUser';
+import getCurrentUser from '@/src/actions/getCurrentUser';
 import getFavoritedIds from '@/src/actions/getFavoritedIds';
 import EmptyState from '@/src/components/EmptyState';
 import Favorites from '@/src/components/Templates/Favorites';
@@ -7,10 +7,9 @@ import getFavoritedListings from '../../actions/getFavoriteListings';
 
 const FavoritesPage = async () => {
   const listings = await getFavoritedListings();
-  const favoriteIds = await getFavoritedIds();
-  const currentUser = await getAuthSession();
+  const currentUser = await getCurrentUser();
 
-  if (!currentUser?.user) {
+  if (!currentUser) {
     return <EmptyState title='Not Authorized' subtitle='Please log in' />;
   }
 
@@ -23,13 +22,7 @@ const FavoritesPage = async () => {
     );
   }
 
-  return (
-    <Favorites
-      listings={listings}
-      currentUser={currentUser.user}
-      favoriteIds={favoriteIds}
-    />
-  );
+  return <Favorites listings={listings} currentUser={currentUser} />;
 };
 
 export default FavoritesPage;

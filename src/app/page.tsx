@@ -1,5 +1,4 @@
-import { getAuthSession } from '@/src/actions/getCurrentUser';
-import getFavoritedIds from '@/src/actions/getFavoritedIds';
+import getCurrentUser from '@/src/actions/getCurrentUser';
 import getListings from '@/src/actions/getListings';
 import Container from '@/src/components/Container';
 import EmptyState from '@/src/components/EmptyState';
@@ -13,8 +12,7 @@ type HomeProps = {
 
 export default async function Home({ searchParams }: HomeProps) {
   const listings = await getListings(searchParams);
-  const currentUser = await getAuthSession();
-  const favoritedIds = await getFavoritedIds();
+  const currentUser = await getCurrentUser();
 
   if (listings.length === 0) {
     return <EmptyState showReset />;
@@ -27,8 +25,7 @@ export default async function Home({ searchParams }: HomeProps) {
           <ListingCard
             key={listing.id}
             listing={listing}
-            currentUser={currentUser?.user}
-            favoritedIds={favoritedIds}
+            currentUser={currentUser}
           />
         ))}
       </div>

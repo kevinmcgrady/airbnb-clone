@@ -2,7 +2,7 @@ import '../globals.css';
 
 import { Nunito } from 'next/font/google';
 
-import { getAuthSession } from '@/src/actions/getCurrentUser';
+import getCurrentUser from '@/src/actions/getCurrentUser';
 import LoginModel from '@/src/components/Models/LoginModel';
 import RegisterModel from '@/src/components/Models/RegisterModel';
 import RentModel from '@/src/components/Models/RentModel';
@@ -23,7 +23,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const currentUser = await getAuthSession();
+  const currentUser = await getCurrentUser();
 
   return (
     <html lang='en'>
