@@ -4,6 +4,8 @@ import Container from '@/src/components/Container';
 import EmptyState from '@/src/components/EmptyState';
 import ListingCard from '@/src/components/Listings/ListingCard';
 
+export const dynamic = 'force-dynamic';
+
 type HomeProps = {
   searchParams: {
     userId?: string;
