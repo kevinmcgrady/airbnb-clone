@@ -6,8 +6,14 @@ import getFavoritedIds from './actions/getFavoritedIds';
 import getListings from './actions/getListings';
 import ListingCard from './components/ListingCard';
 
-export default async function Home() {
-  const listings = await getListings();
+type HomeProps = {
+  searchParams: {
+    userId?: string;
+  };
+};
+
+export default async function Home({ searchParams }: HomeProps) {
+  const listings = await getListings(searchParams);
   const currentUser = await getAuthSession();
   const favoritedIds = await getFavoritedIds();
 
