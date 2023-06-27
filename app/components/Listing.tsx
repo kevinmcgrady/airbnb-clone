@@ -130,7 +130,9 @@ const Listing: React.FC<ListingProps> = ({
                 totalPrice={totalPrice}
                 onChangeDate={(value) => setDateRange(value)}
                 dateRange={dateRange}
-                onSubmit={currentUser ? createReservation : loginModel.onClose}
+                onSubmit={
+                  currentUser ? createReservation : () => loginModel.onClose
+                }
                 disabled={isLoading}
                 disableDates={disableDates}
               />
