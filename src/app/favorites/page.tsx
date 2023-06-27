@@ -1,9 +1,9 @@
 import { getAuthSession } from '@/src/actions/getCurrentUser';
+import getFavoritedIds from '@/src/actions/getFavoritedIds';
+import EmptyState from '@/src/components/EmptyState';
+import Favorites from '@/src/components/Templates/Favorites';
 
-import getFavoritedIds from '../../actions/getFavoritedIds';
 import getFavoritedListings from '../../actions/getFavoriteListings';
-import EmptyState from '../../components/EmptyState';
-import Favorites from '../../components/Templates/Favorites';
 
 const FavoritesPage = async () => {
   const listings = await getFavoritedListings();

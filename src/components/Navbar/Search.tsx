@@ -5,8 +5,8 @@ import { useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
 import { BiSearch } from 'react-icons/bi';
 
-import useCountries from '../../hooks/useCountries';
-import useSearchModel from '../../hooks/useSearchModel';
+import useCountries from '@/src/hooks/useCountries';
+import useSearchModel from '@/src/hooks/useSearchModel';
 
 const Search = () => {
   const searchModel = useSearchModel();

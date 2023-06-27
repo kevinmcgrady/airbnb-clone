@@ -3,14 +3,13 @@ import '../globals.css';
 import { Nunito } from 'next/font/google';
 
 import { getAuthSession } from '@/src/actions/getCurrentUser';
+import LoginModel from '@/src/components/Models/LoginModel';
+import RegisterModel from '@/src/components/Models/RegisterModel';
+import RentModel from '@/src/components/Models/RentModel';
+import SearchModel from '@/src/components/Models/SearchModel';
 import Navbar from '@/src/components/Navbar/Navbar';
-
-import LoginModel from '../components/Models/LoginModel';
-import RegisterModel from '../components/Models/RegisterModel';
-import RentModel from '../components/Models/RentModel';
-import SearchModel from '../components/Models/SearchModel';
-import { ReactQueryProvider } from '../providers/ReactQuery';
-import ToasterProvider from '../providers/ToasterProvider';
+import { ReactQueryProvider } from '@/src/providers/ReactQuery';
+import ToasterProvider from '@/src/providers/ToasterProvider';
 
 export const metadata = {
   title: 'Airbnb',

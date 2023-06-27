@@ -7,14 +7,13 @@ import qs from 'query-string';
 import { useCallback, useMemo, useState } from 'react';
 import { Range } from 'react-date-range';
 
+import Heading from '@/src/components/Heading';
+import Calendar from '@/src/components/Inputs/Calendar';
+import Counter from '@/src/components/Inputs/Counter';
+import CountrySelect from '@/src/components/Inputs/CountrySelect';
 import Model from '@/src/components/Models/Model';
 import useSearchModel from '@/src/hooks/useSearchModel';
 import { CountrySelectType } from '@/src/types/CountrySelect';
-
-import Heading from '../Heading';
-import Calendar from '../Inputs/Calendar';
-import Counter from '../Inputs/Counter';
-import CountrySelect from '../Inputs/CountrySelect';
 
 enum STEPS {
   LOCATION = 0,

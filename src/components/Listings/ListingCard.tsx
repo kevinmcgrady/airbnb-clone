@@ -7,9 +7,9 @@ import { useRouter } from 'next/navigation';
 import { User } from 'next-auth';
 import { useCallback, useMemo } from 'react';
 
-import useCountries from '../../hooks/useCountries';
-import Button from '../Button';
-import HeartButton from '../HeartButton';
+import Button from '@/src/components/Button';
+import HeartButton from '@/src/components/HeartButton';
+import useCountries from '@/src/hooks/useCountries';
 
 type ListingCardProps = {
   listing: Listing;

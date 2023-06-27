@@ -12,14 +12,13 @@ import { FcGoogle } from 'react-icons/fc';
 import Button from '@/src/components/Button';
 import Heading from '@/src/components/Heading';
 import Input from '@/src/components/Inputs/Input';
+import Model from '@/src/components/Models/Model';
 import useLoginModel from '@/src/hooks/useLoginModel';
 import useRegisterModel from '@/src/hooks/useRegisterModel';
 import {
   LoginUserRequest,
   LoginUserValidator,
 } from '@/src/validators/loginUser';
-
-import Model from './Model';
 
 const LoginModel = () => {
   const loginModel = useLoginModel();

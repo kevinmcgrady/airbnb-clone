@@ -16,8 +16,7 @@ import ListingInfo from '@/src/components/Listings/ListingInfo';
 import ListingReservation from '@/src/components/Listings/ListingReservation';
 import { categories } from '@/src/components/Navbar/Categories';
 import useLoginModel from '@/src/hooks/useLoginModel';
-
-import { CreateReservationRequest } from '../../validators/CreateReservation';
+import { CreateReservationRequest } from '@/src/validators/CreateReservation';
 
 const initialDateRange: Range = {
   startDate: new Date(),

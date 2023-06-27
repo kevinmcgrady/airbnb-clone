@@ -1,7 +1,7 @@
 'use client';
 
-import Button from '../Button';
-import Calendar from '../Inputs/Calendar';
+import Button from '@/src/components/Button';
+import Calendar from '@/src/components/Inputs/Calendar';
 
 type ListingReservationProps = {
   price: number;

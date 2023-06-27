@@ -7,11 +7,10 @@ import { User } from 'next-auth';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 
+import Container from '@/src/components/Container';
+import Heading from '@/src/components/Heading';
+import ListingCard from '@/src/components/Listings/ListingCard';
 import { ReservationWithListing } from '@/src/types/ReservarionWithListing';
-
-import Container from '../Container';
-import Heading from '../Heading';
-import ListingCard from '../Listings/ListingCard';
 
 type ReservationsProps = {
   reservations: ReservationWithListing[];

@@ -7,7 +7,7 @@ import { User } from 'next-auth';
 import { toast } from 'react-hot-toast';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 
-import useLoginModel from '../hooks/useLoginModel';
+import useLoginModel from '@/src/hooks/useLoginModel';
 
 type HeartButtonProps = {
   listingId: string;

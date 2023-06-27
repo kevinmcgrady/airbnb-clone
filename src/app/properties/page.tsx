@@ -1,8 +1,8 @@
-import { getAuthSession } from '../../actions/getCurrentUser';
-import getFavoritedIds from '../../actions/getFavoritedIds';
-import getListings from '../../actions/getListings';
-import EmptyState from '../../components/EmptyState';
-import Properties from '../../components/Templates/Properties';
+import { getAuthSession } from '@/src/actions/getCurrentUser';
+import getFavoritedIds from '@/src/actions/getFavoritedIds';
+import getListings from '@/src/actions/getListings';
+import EmptyState from '@/src/components/EmptyState';
+import Properties from '@/src/components/Templates/Properties';
 
 const PropertiesPage = async () => {
   const currentUser = await getAuthSession();

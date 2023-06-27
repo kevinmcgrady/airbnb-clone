@@ -1,8 +1,8 @@
-import { getAuthSession } from '../../actions/getCurrentUser';
-import getFavoritedIds from '../../actions/getFavoritedIds';
-import getReservations from '../../actions/getReservations';
-import EmptyState from '../../components/EmptyState';
-import Trips from '../../components/Templates/Trips';
+import { getAuthSession } from '@/src/actions/getCurrentUser';
+import getFavoritedIds from '@/src/actions/getFavoritedIds';
+import getReservations from '@/src/actions/getReservations';
+import EmptyState from '@/src/components/EmptyState';
+import Trips from '@/src/components/Templates/Trips';
 
 const TripsPage = async () => {
   const currentUser = await getAuthSession();

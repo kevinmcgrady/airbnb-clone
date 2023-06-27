@@ -3,10 +3,10 @@
 import { User } from '@prisma/client';
 import dynamic from 'next/dynamic';
 
-import useCountries from '../../hooks/useCountries';
-import { CategoryType } from '../../types/Category';
-import Avatar from '../Avatar';
-import ListingCategory from './ListingCategory';
+import Avatar from '@/src/components/Avatar';
+import ListingCategory from '@/src/components/Listings/ListingCategory';
+import useCountries from '@/src/hooks/useCountries';
+import { CategoryType } from '@/src/types/Category';
 
 const Map = dynamic(() => import('@/src/components/Map'), { ssr: false });
 

@@ -1,6 +1,5 @@
 'use client';
 
-import { Listing, Reservation } from '@prisma/client';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
@@ -8,10 +7,10 @@ import { User } from 'next-auth';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 
-import { ReservationWithListing } from '../../types/ReservarionWithListing';
-import Container from '../Container';
-import Heading from '../Heading';
-import ListingCard from '../Listings/ListingCard';
+import Container from '@/src/components/Container';
+import Heading from '@/src/components/Heading';
+import ListingCard from '@/src/components/Listings/ListingCard';
+import { ReservationWithListing } from '@/src/types/ReservarionWithListing';
 
 type TripsProps = {
   reservations: ReservationWithListing[];

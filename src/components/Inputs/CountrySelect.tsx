@@ -2,8 +2,8 @@
 
 import Select from 'react-select';
 
-import useCountries from '../../hooks/useCountries';
-import { CountrySelectType } from '../../types/CountrySelect';
+import useCountries from '@/src/hooks/useCountries';
+import { CountrySelectType } from '@/src/types/CountrySelect';
 
 type CountrySelectProps = {
   value?: CountrySelectType | null;

@@ -1,6 +1,5 @@
+import { getAuthSession } from '@/src/actions/getCurrentUser';
 import prisma from '@/src/libs/prismadb';
-
-import { getAuthSession } from './getCurrentUser';
 
 export default async function getFavoritedListings() {
   try {

@@ -1,10 +1,9 @@
+import { getAuthSession } from '@/src/actions/getCurrentUser';
+import getFavoritedIds from '@/src/actions/getFavoritedIds';
+import getListings from '@/src/actions/getListings';
 import Container from '@/src/components/Container';
 import EmptyState from '@/src/components/EmptyState';
-
-import { getAuthSession } from '../actions/getCurrentUser';
-import getFavoritedIds from '../actions/getFavoritedIds';
-import getListings from '../actions/getListings';
-import ListingCard from '../components/Listings/ListingCard';
+import ListingCard from '@/src/components/Listings/ListingCard';
 
 type HomeProps = {
   searchParams: {

@@ -3,9 +3,9 @@
 import { Listing } from '@prisma/client';
 import { User } from 'next-auth';
 
-import Container from '../Container';
-import Heading from '../Heading';
-import ListingCard from '../Listings/ListingCard';
+import Container from '@/src/components/Container';
+import Heading from '@/src/components/Heading';
+import ListingCard from '@/src/components/Listings/ListingCard';
 
 type FavoritesProps = {
   listings: Listing[];
