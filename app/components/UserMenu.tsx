@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { Session } from 'next-auth';
 import { signOut } from 'next-auth/react';
 import { Fragment, useCallback, useState } from 'react';
@@ -17,7 +18,7 @@ type UserMenuProps = {
 
 const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
+  const router = useRouter();
   const registerModel = useRegisterModel();
   const loginModel = useLoginModel();
   const rentModel = useRentModel();
@@ -57,9 +58,15 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
           <div className='flex flex-col cursor-pointer'>
             {currentUser?.user ? (
               <Fragment>
-                <MenuItem onClick={() => {}} label='My trips' />
+                <MenuItem
+                  onClick={() => router.push('/trips')}
+                  label='My trips'
+                />
                 <MenuItem onClick={() => {}} label='My favorites' />
-                <MenuItem onClick={() => {}} label='My reservations' />
+                <MenuItem
+                  onClick={() => router.push('/reservations')}
+                  label='My reservations'
+                />
                 <MenuItem onClick={rentModel.onOpen} label='Airbnb your home' />
                 <hr />
                 <MenuItem onClick={() => signOut()} label='Log out' />

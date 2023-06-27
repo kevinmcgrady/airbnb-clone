@@ -64,7 +64,7 @@ const Listing: React.FC<ListingProps> = ({
     onSuccess: () => {
       toast.success('Listing reserved!');
       setDateRange(initialDateRange);
-      router.refresh();
+      router.push('/trips');
     },
   });
 
