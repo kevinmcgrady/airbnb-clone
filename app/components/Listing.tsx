@@ -48,10 +48,6 @@ const Listing: React.FC<ListingProps> = ({
 
   const { mutate: createReservation, isLoading } = useMutation({
     mutationFn: async () => {
-      if (!currentUser) {
-        return loginModel.onOpen();
-      }
-
       const payload: CreateReservationRequest = {
         totalPrice,
         startDate: dateRange.startDate!,
@@ -134,7 +130,7 @@ const Listing: React.FC<ListingProps> = ({
                 totalPrice={totalPrice}
                 onChangeDate={(value) => setDateRange(value)}
                 dateRange={dateRange}
-                onSubmit={createReservation}
+                onSubmit={currentUser ? createReservation : loginModel.onClose}
                 disabled={isLoading}
                 disableDates={disableDates}
               />
