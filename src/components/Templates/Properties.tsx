@@ -50,7 +50,7 @@ const Properties: React.FC<PropertiesProps> = ({ listings, currentUser }) => {
             disabled={deletingId === property.id}
             actionLabel='Delete property'
             currentUser={currentUser}
-            isLoading={isLoading}
+            isLoading={isLoading && deletingId === property.id}
           />
         ))}
       </div>

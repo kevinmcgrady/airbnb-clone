@@ -55,7 +55,7 @@ const Reservations: React.FC<ReservationsProps> = ({
             actionLabel='Cancel guest reservation'
             currentUser={currentUser}
             reservation={reservation}
-            isLoading={isLoading}
+            isLoading={isLoading && deletingId === reservation.id}
           />
         ))}
       </div>
