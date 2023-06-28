@@ -25,9 +25,7 @@ export default async function getCurrentUser() {
       return null;
     }
 
-    return {
-      ...currentUser,
-    };
+    return currentUser;
   } catch (error: any) {
     return null;
   }

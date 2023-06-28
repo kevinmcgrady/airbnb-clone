@@ -60,11 +60,11 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
               <Fragment>
                 <MenuItem
                   onClick={() => router.push('/trips')}
-                  label='My trips'
+                  label='My Trips'
                 />
                 <MenuItem
                   onClick={() => router.push('/favorites')}
-                  label='My favorites'
+                  label='My Favorites'
                 />
                 <MenuItem
                   onClick={() => router.push('/properties')}
@@ -72,7 +72,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
                 />
                 <MenuItem
                   onClick={() => router.push('/reservations')}
-                  label='My reservations'
+                  label='My Reservations'
                 />
                 <MenuItem onClick={rentModel.onOpen} label='Airbnb your home' />
                 <hr />

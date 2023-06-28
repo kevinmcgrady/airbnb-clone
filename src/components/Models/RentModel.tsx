@@ -16,7 +16,7 @@ import CountrySelect from '@/src/components/Inputs/CountrySelect';
 import ImageUpload from '@/src/components/Inputs/ImageUpload';
 import Input from '@/src/components/Inputs/Input';
 import Model from '@/src/components/Models/Model';
-import { categories } from '@/src/components/Navbar/Categories';
+import { categories } from '@/src/constants/categories';
 import useRentModel from '@/src/hooks/useRentModel';
 import {
   CreateListingRequest,
