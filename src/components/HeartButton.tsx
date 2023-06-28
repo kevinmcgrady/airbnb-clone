@@ -24,7 +24,10 @@ const HeartButton: React.FC<HeartButtonProps> = ({
 
   const { mutate: toggleFavorite } = useMutation({
     mutationFn: async () => {
-      const data = await axios.post(`/api/favorites/${listingId}`);
+      const query = hasFavorited
+        ? axios.delete(`/api/favorites/${listingId}`)
+        : axios.post(`/api/favorites/${listingId}`);
+      const { data } = await query;
       return data;
     },
     onError: () => {
