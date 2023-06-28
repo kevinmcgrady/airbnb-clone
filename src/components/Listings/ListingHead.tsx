@@ -26,7 +26,6 @@ const ListingHead: React.FC<ListingHeadProps> = ({
 }) => {
   const { getByValue } = useCountries();
   const location = getByValue(locationValue);
-
   return (
     <Fragment>
       <Heading

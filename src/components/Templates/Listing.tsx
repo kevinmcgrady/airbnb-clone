@@ -3,7 +3,6 @@
 import { Listing, Reservation, User } from '@prisma/client';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
-import { differenceInCalendarDays, eachDayOfInterval } from 'date-fns';
 import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import { Range } from 'react-date-range';
@@ -15,6 +14,8 @@ import ListingInfo from '@/src/components/Listings/ListingInfo';
 import ListingReservation from '@/src/components/Listings/ListingReservation';
 import { categories } from '@/src/constants/categories';
 import useLoginModel from '@/src/hooks/useLoginModel';
+import { formatDisableDates } from '@/src/utils/formatDisableDates';
+import { formatDuration } from '@/src/utils/formatDuration';
 import { CreateReservationRequest } from '@/src/validators/CreateReservation';
 
 const initialDateRange: Range = {
@@ -66,20 +67,10 @@ const Listing: React.FC<ListingProps> = ({
     },
   });
 
-  const disableDates = useMemo(() => {
-    let dates: Date[] = [];
-
-    reservations.forEach((reservation) => {
-      const range = eachDayOfInterval({
-        start: new Date(reservation.startDate),
-        end: new Date(reservation.endDate),
-      });
-
-      dates = [...dates, ...range];
-    });
-
-    return dates;
-  }, [reservations]);
+  const disableDates = useMemo(
+    () => formatDisableDates(reservations),
+    [reservations],
+  );
 
   const category = useMemo(() => {
     return categories.find((category) => category.label === listing.category);
@@ -87,16 +78,11 @@ const Listing: React.FC<ListingProps> = ({
 
   useEffect(() => {
     if (dateRange.startDate && dateRange.endDate) {
-      const dateCount = differenceInCalendarDays(
-        dateRange.endDate,
-        dateRange.startDate,
-      );
-
-      if (dateCount && listing.price) {
-        setTotalPrice(dateCount * listing.price);
-      } else {
-        setTotalPrice(listing.price);
-      }
+      const dateCount =
+        formatDuration(dateRange.startDate, dateRange.endDate) + 1;
+      dateRange && listing.price
+        ? setTotalPrice(dateCount * listing.price)
+        : setTotalPrice(listing.price);
     }
   }, [dateRange, listing.price]);
 

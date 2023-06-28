@@ -1,12 +1,12 @@
 'use client';
 
-import { differenceInCalendarDays } from 'date-fns';
 import { useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
 import { BiSearch } from 'react-icons/bi';
 
 import useCountries from '@/src/hooks/useCountries';
 import useSearchModel from '@/src/hooks/useSearchModel';
+import { formatDuration } from '@/src/utils/formatDuration';
 
 const Search = () => {
   const searchModel = useSearchModel();
@@ -19,33 +19,17 @@ const Search = () => {
   const guestCount = params?.get('guestCount');
 
   const locationLabel = useMemo(() => {
-    if (locationValue) {
-      return getByValue(locationValue)?.label;
-    }
-    return 'Anywhere';
+    return locationValue ? getByValue(locationValue)?.label : 'Anywhere';
   }, [getByValue, locationValue]);
 
   const durationLabel = useMemo(() => {
-    if (startDate && endDate) {
-      const start = new Date(startDate);
-      const end = new Date(endDate);
-      let diff = differenceInCalendarDays(end, start);
-
-      if (diff === 0) {
-        diff = 1;
-      }
-
-      return `${diff} Days`;
-    }
-    return 'Any Week';
+    return startDate && endDate
+      ? `${formatDuration(endDate, startDate) + 1} days`
+      : 'Any Week';
   }, [startDate, endDate]);
 
   const guestLabel = useMemo(() => {
-    if (guestCount) {
-      return `${guestCount} Guests`;
-    }
-
-    return 'Add Guests';
+    return guestCount ? `${guestCount} Guests` : 'Add Guests';
   }, [guestCount]);
 
   return (

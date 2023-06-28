@@ -1,7 +1,6 @@
 'use client';
 
 import { Listing, Reservation, User } from '@prisma/client';
-import { format } from 'date-fns';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
@@ -9,6 +8,7 @@ import { useCallback, useMemo } from 'react';
 import Button from '@/src/components/Button';
 import HeartButton from '@/src/components/HeartButton';
 import useCountries from '@/src/hooks/useCountries';
+import { formatDate } from '@/src/utils/formatDate';
 
 type ListingCardProps = {
   listing: Listing;
@@ -31,7 +31,6 @@ const ListingCard: React.FC<ListingCardProps> = ({
 }) => {
   const router = useRouter();
   const { getByValue } = useCountries();
-
   const location = getByValue(listing.locationValue);
 
   const handleCancel = useCallback(
@@ -47,31 +46,21 @@ const ListingCard: React.FC<ListingCardProps> = ({
   );
 
   const price = useMemo(() => {
-    if (reservation) {
-      return reservation.totalPrice;
-    }
-
-    return listing.price;
+    return reservation ? reservation.totalPrice : listing.price;
   }, [reservation, listing.price]);
 
   const reservationDate = useMemo(() => {
-    if (!reservation) {
-      return null;
-    }
-    const start = new Date(reservation.startDate);
-    const end = new Date(reservation.endDate);
-
-    return `${format(start, 'PP')} - ${format(end, 'PP')}`;
+    return reservation
+      ? formatDate(reservation.startDate, reservation.endDate)
+      : null;
   }, [reservation]);
 
   return (
-    <div
-      className='col-span-1 cursor-pointer group'
-      onClick={() => router.push(`/listing/${listing.id}`)}
-    >
+    <div className='col-span-1 cursor-pointer group'>
       <div className='flex flex-col gap-2 w-full'>
         <div className='aspect-square w-full relative overflow-hidden rounded-xl'>
           <Image
+            onClick={() => router.push(`/listing/${listing.id}`)}
             fill
             alt={listing.title}
             src={listing.imageSrc}

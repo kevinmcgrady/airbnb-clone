@@ -1,19 +1,18 @@
 'use client';
 
 import { formatISO } from 'date-fns';
-import dynamic from 'next/dynamic';
 import { useRouter, useSearchParams } from 'next/navigation';
 import qs from 'query-string';
 import { useCallback, useMemo, useState } from 'react';
 import { Range } from 'react-date-range';
 
-import Heading from '@/src/components/Heading';
-import Calendar from '@/src/components/Inputs/Calendar';
-import Counter from '@/src/components/Inputs/Counter';
-import CountrySelect from '@/src/components/Inputs/CountrySelect';
 import Model from '@/src/components/Models/Model';
 import useSearchModel from '@/src/hooks/useSearchModel';
 import { CountrySelectType } from '@/src/types/CountrySelect';
+
+import SearchModelDateBody from './SearchModelDateBody';
+import SearchModelInfoBody from './SearchModelInfoBody';
+import SearchModelLocationBody from './SearchModelLocationBody';
 
 enum STEPS {
   LOCATION = 0,
@@ -37,11 +36,6 @@ const SearchModel = () => {
     endDate: new Date(),
     key: 'selection',
   });
-
-  const Map = useMemo(
-    () => dynamic(() => import('@/src/components/Map'), { ssr: false }),
-    [location],
-  );
 
   const onBack = useCallback(() => {
     setStep((value) => value - 1);
@@ -103,74 +97,35 @@ const SearchModel = () => {
   ]);
 
   const actionLabel = useMemo(() => {
-    if (step === STEPS.INFO) {
-      return 'Search';
-    }
-    return 'Next';
+    return step === STEPS.INFO ? 'Search' : 'Next';
   }, [step]);
 
   const secondaryActionLabel = useMemo(() => {
-    if (step === STEPS.LOCATION) {
-      return undefined;
-    }
-    return 'Back';
+    return step === STEPS.LOCATION ? undefined : 'Back';
   }, [step]);
 
-  let bodyContent = (
-    <div className='flex flex-col gap-8'>
-      <Heading
-        title='Where do you wanna go?'
-        subtitle='Find the perfect location'
-      />
-      <CountrySelect
-        value={location}
-        onChange={(value) => setLocation(value)}
-      />
-      <hr />
-      <Map center={location?.latlng} />
-    </div>
-  );
+  const secondaryAction = () => {
+    return step === STEPS.LOCATION ? undefined : onBack;
+  };
 
-  if (step === STEPS.DATE) {
-    bodyContent = (
-      <div className='flex flex-col gap-8'>
-        <Heading
-          title='When do you plan to go?'
-          subtitle='Make sure everyone is free'
-        />
-        <Calendar
-          value={dateRange}
-          onChange={(value) => setDateRange(value.selection)}
-        />
-      </div>
-    );
-  }
-
-  if (step === STEPS.INFO) {
-    bodyContent = (
-      <div className='flex flex-col gap-8'>
-        <Heading title='More Information' subtitle='Find your perfect place' />
-        <Counter
-          title='Guests'
-          subtitle='How many guests are coming?'
-          value={guestCount}
-          onChange={(value) => setGuestCount(value)}
-        />
-        <Counter
-          title='Rooms'
-          subtitle='How many rooms do you need?'
-          value={roomCount}
-          onChange={(value) => setRoomCount(value)}
-        />
-        <Counter
-          title='Bathrooms'
-          subtitle='How many bathrooms do you need?'
-          value={bathroomCount}
-          onChange={(value) => setBathroomCount(value)}
-        />
-      </div>
-    );
-  }
+  const bodyContent: Record<STEPS, React.ReactElement> = {
+    [STEPS.LOCATION]: (
+      <SearchModelLocationBody location={location} onChange={setLocation} />
+    ),
+    [STEPS.DATE]: (
+      <SearchModelDateBody dateRange={dateRange} onSelect={setDateRange} />
+    ),
+    [STEPS.INFO]: (
+      <SearchModelInfoBody
+        onBathroomSelect={setBathroomCount}
+        onGuestCountSelect={setGuestCount}
+        onRoomCountSelect={setRoomCount}
+        bathroomCount={bathroomCount}
+        guestCount={guestCount}
+        roomCount={roomCount}
+      />
+    ),
+  };
 
   return (
     <Model
@@ -180,8 +135,8 @@ const SearchModel = () => {
       title='Filters'
       actionLabel={actionLabel}
       secondaryActionLabel={secondaryActionLabel}
-      body={bodyContent}
-      secondaryAction={step === STEPS.LOCATION ? undefined : onBack}
+      body={bodyContent[step]}
+      secondaryAction={secondaryAction}
     />
   );
 };
