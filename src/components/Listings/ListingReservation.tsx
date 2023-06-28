@@ -11,6 +11,7 @@ type ListingReservationProps = {
   onSubmit: () => void;
   disabled?: boolean;
   disableDates: Date[];
+  isLoading?: boolean;
 };
 
 const ListingReservation: React.FC<ListingReservationProps> = ({
@@ -21,6 +22,7 @@ const ListingReservation: React.FC<ListingReservationProps> = ({
   price,
   totalPrice,
   disabled,
+  isLoading,
 }) => {
   return (
     <div className='bg-white rounded-xl border-[1px] border-neutral-200 overflow-hidden'>
@@ -35,7 +37,12 @@ const ListingReservation: React.FC<ListingReservationProps> = ({
         onChange={(value) => onChangeDate(value.selection)}
       />
       <div className='p-4'>
-        <Button disabled={disabled} label='Reserve' onClick={onSubmit}></Button>
+        <Button
+          disabled={disabled}
+          label='Reserve'
+          onClick={onSubmit}
+          isLoading={isLoading}
+        ></Button>
       </div>
       <hr />
       <div className='p-4 flex flex-row items-center justify-between font-semibold text-lg'>

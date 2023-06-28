@@ -21,7 +21,7 @@ const Trips: React.FC<TripsProps> = ({ reservations, currentUser }) => {
   const router = useRouter();
   const [deletingId, setDeletingId] = useState<string>('');
 
-  const { mutate: deleteReservation } = useMutation({
+  const { mutate: deleteReservation, isLoading } = useMutation({
     mutationFn: async (id: string) => {
       setDeletingId(id);
       const { data } = await axios.delete(`/api/reservations/${id}`);
@@ -55,6 +55,7 @@ const Trips: React.FC<TripsProps> = ({ reservations, currentUser }) => {
             actionLabel='Cancel reservation'
             currentUser={currentUser}
             reservation={reservation}
+            isLoading={isLoading}
           />
         ))}
       </div>

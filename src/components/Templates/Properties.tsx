@@ -20,7 +20,7 @@ const Properties: React.FC<PropertiesProps> = ({ listings, currentUser }) => {
   const router = useRouter();
   const [deletingId, setDeletingId] = useState<string>('');
 
-  const { mutate: deleteListing } = useMutation({
+  const { mutate: deleteListing, isLoading } = useMutation({
     mutationFn: async (id: string) => {
       setDeletingId(id);
       const { data } = await axios.delete(`/api/listing/${id}`);
@@ -50,6 +50,7 @@ const Properties: React.FC<PropertiesProps> = ({ listings, currentUser }) => {
             disabled={deletingId === property.id}
             actionLabel='Delete property'
             currentUser={currentUser}
+            isLoading={isLoading}
           />
         ))}
       </div>

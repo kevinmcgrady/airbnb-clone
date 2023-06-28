@@ -117,6 +117,7 @@ const Listing: React.FC<ListingProps> = ({
                 onSubmit={currentUser ? createReservation : loginModel.onOpen}
                 disabled={isLoading}
                 disableDates={disableDates}
+                isLoading={isLoading}
               />
             </div>
           </div>

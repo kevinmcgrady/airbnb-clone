@@ -18,6 +18,7 @@ type ListingCardProps = {
   disabled?: boolean;
   actionLabel?: string;
   actionId?: string;
+  isLoading?: boolean;
 };
 
 const ListingCard: React.FC<ListingCardProps> = ({
@@ -28,6 +29,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
   disabled,
   onAction,
   reservation,
+  isLoading,
 }) => {
   const router = useRouter();
   const { getByValue } = useCountries();
@@ -85,6 +87,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
             disabled={disabled}
             label={actionLabel}
             onClick={handleCancel}
+            isLoading={isLoading}
           />
         )}
       </div>
