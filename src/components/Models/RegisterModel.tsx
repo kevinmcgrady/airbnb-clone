@@ -47,7 +47,7 @@ const RegisterModel = () => {
       const data = await axios.post('/api/register', payload);
       return data;
     },
-    onError: (error) => {
+    onError: () => {
       toast.error('Something went wrong');
     },
     onSuccess: () => {

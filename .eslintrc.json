@@ -6,10 +6,11 @@
     "plugin:import/warnings",
     "plugin:import/typescript"
   ],
-  "plugins": ["simple-import-sort", "jsx-a11y"],
+  "plugins": ["simple-import-sort", "jsx-a11y", "unused-imports"],
   "rules": {
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
-    "react/no-unknown-property": "off"
+    "react/no-unknown-property": "off",
+    "unused-imports/no-unused-imports": "error"
   }
 }

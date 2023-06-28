@@ -7,7 +7,7 @@ type Params = {
   listingId: string;
 };
 
-export async function POST(req: Request, { params }: { params: Params }) {
+export async function POST(_: Request, { params }: { params: Params }) {
   try {
     const currentUser = await getCurrentUser();
 

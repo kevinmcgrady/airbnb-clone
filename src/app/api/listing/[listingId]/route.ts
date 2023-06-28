@@ -7,7 +7,7 @@ type Params = {
   listingId?: string;
 };
 
-export async function DELETE(req: Request, { params }: { params: Params }) {
+export async function DELETE(_: Request, { params }: { params: Params }) {
   try {
     const currentUser = await getCurrentUser();
 

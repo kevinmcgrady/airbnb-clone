@@ -1,5 +1,4 @@
 import getCurrentUser from '@/src/actions/getCurrentUser';
-import getFavoritedIds from '@/src/actions/getFavoritedIds';
 import EmptyState from '@/src/components/EmptyState';
 import Favorites from '@/src/components/Templates/Favorites';
 

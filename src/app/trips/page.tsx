@@ -1,5 +1,4 @@
 import getCurrentUser from '@/src/actions/getCurrentUser';
-import getFavoritedIds from '@/src/actions/getFavoritedIds';
 import getReservations from '@/src/actions/getReservations';
 import EmptyState from '@/src/components/EmptyState';
 import Trips from '@/src/components/Templates/Trips';
