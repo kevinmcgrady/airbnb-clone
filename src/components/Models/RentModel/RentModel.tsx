@@ -38,10 +38,16 @@ const RentModel = () => {
   const [step, setStep] = useState<STEPS>(STEPS.CATEGORY);
 
   const onBack = () => {
+    clearErrors();
     setStep((value) => value - 1);
   };
 
-  const onNext = () => {
+  const onNext = async (fields: string[]) => {
+    await trigger([...fields] as any);
+
+    if (Object.keys(errors).length > 0) {
+      return;
+    }
     setStep((value) => value + 1);
   };
 
@@ -78,10 +84,12 @@ const RentModel = () => {
     watch,
     formState: { errors },
     reset,
+    clearErrors,
+    trigger,
   } = useForm<CreateListingRequest>({
     resolver: zodResolver(CreateListingValidator),
     defaultValues: {
-      category: '',
+      category: 'Beach',
       location: undefined,
       guestCount: 1,
       roomCount: 1,
@@ -110,52 +118,75 @@ const RentModel = () => {
   }, [step]);
 
   const onSubmit =
-    step !== STEPS.PRICE ? onNext : handleSubmit((e) => createListing(e));
+    step !== STEPS.PRICE
+      ? () => onNext(sections[step].validateFields)
+      : handleSubmit((e) => createListing(e));
 
   const secondaryAction = step === STEPS.CATEGORY ? undefined : onBack;
 
-  const bodyContent: Record<STEPS, React.ReactElement> = {
-    [STEPS.CATEGORY]: (
-      <RentModelCategoryBody
-        categories={categories}
-        category={watch('category')}
-        onSelect={setCustomValue}
-      />
-    ),
-    [STEPS.DESCRIPTION]: (
-      <RentModelDescriptionBody
-        register={register}
-        errors={errors}
-        isLoading={isLoading}
-      />
-    ),
-    [STEPS.IMAGES]: (
-      <RentModelImageBody
-        onSelect={setCustomValue}
-        imageSrc={watch('imageSrc')}
-      />
-    ),
-    [STEPS.INFO]: (
-      <RentModelInfoBody
-        bathroomCount={watch('bathroomCount')}
-        guestCount={watch('guestCount')}
-        onSelect={setCustomValue}
-        roomCount={watch('roomCount')}
-      />
-    ),
-    [STEPS.LOCATION]: (
-      <RentModelLocationBody
-        location={watch('location')}
-        onSelect={setCustomValue}
-      />
-    ),
-    [STEPS.PRICE]: (
-      <RentModelPriceBody
-        errors={errors}
-        isLoading={isLoading}
-        register={register}
-      />
-    ),
+  const sections: Record<
+    STEPS,
+    { validateFields: string[]; body: React.ReactElement }
+  > = {
+    [STEPS.CATEGORY]: {
+      validateFields: ['category'],
+      body: (
+        <RentModelCategoryBody
+          categories={categories}
+          category={watch('category')}
+          onSelect={setCustomValue}
+        />
+      ),
+    },
+    [STEPS.DESCRIPTION]: {
+      validateFields: ['title', 'description'],
+      body: (
+        <RentModelDescriptionBody
+          register={register}
+          errors={errors}
+          isLoading={isLoading}
+        />
+      ),
+    },
+    [STEPS.IMAGES]: {
+      validateFields: ['imageSrc'],
+      body: (
+        <RentModelImageBody
+          onSelect={setCustomValue}
+          imageSrc={watch('imageSrc')}
+        />
+      ),
+    },
+    [STEPS.INFO]: {
+      validateFields: ['bathroomCount', 'guestCount', 'roomCount'],
+      body: (
+        <RentModelInfoBody
+          bathroomCount={watch('bathroomCount')}
+          guestCount={watch('guestCount')}
+          onSelect={setCustomValue}
+          roomCount={watch('roomCount')}
+        />
+      ),
+    },
+    [STEPS.LOCATION]: {
+      validateFields: ['location'],
+      body: (
+        <RentModelLocationBody
+          location={watch('location')}
+          onSelect={setCustomValue}
+        />
+      ),
+    },
+    [STEPS.PRICE]: {
+      validateFields: ['price'],
+      body: (
+        <RentModelPriceBody
+          errors={errors}
+          isLoading={isLoading}
+          register={register}
+        />
+      ),
+    },
   };
 
   return (
@@ -167,7 +198,7 @@ const RentModel = () => {
       actionLabel={actionLabel}
       secondaryActionLabel={secondaryActionLabel}
       secondaryAction={secondaryAction}
-      body={bodyContent[step]}
+      body={sections[step].body}
     />
   );
 };
