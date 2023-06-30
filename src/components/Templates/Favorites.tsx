@@ -1,5 +1,3 @@
-'use client';
-
 import { Listing, User } from '@prisma/client';
 
 import Container from '@/src/components/Container';

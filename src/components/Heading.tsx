@@ -1,5 +1,3 @@
-'use client';
-
 type HeadingProps = {
   title: string;
   subtitle?: string;
