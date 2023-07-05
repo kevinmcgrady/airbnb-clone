@@ -10,7 +10,7 @@
     "lint:fix": "next lint --fix",
     "husky:install": "husky install",
     "postinstall": "prisma generate",
-    "test": "jest",
+    "test": "jest --silent",
     "test:coverage": "jest --coverage"
   },
   "dependencies": {
@@ -25,6 +25,7 @@
     "date-fns": "^2.30.0",
     "eslint": "8.43.0",
     "eslint-config-next": "13.4.7",
+    "jest-mock-extended": "^3.0.4",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.252.0",
     "next": "13.4.7",
